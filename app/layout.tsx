@@ -1,4 +1,3 @@
-import { GeistSans } from 'geist/font/sans';
 import { baseUrl } from 'lib/utils';
 import { ReactNode } from 'react';
 import './globals.css';
@@ -24,7 +23,7 @@ export default async function RootLayout({
 }) {
 
   return (
-    <html lang="en" className={GeistSans.variable}>
+    <html lang="en">
       {children}
     </html>
   );
