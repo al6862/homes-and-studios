@@ -7,8 +7,8 @@ import { draftMode } from "next/headers";
 
 import AlertBanner from "./alert-banner";
 
-import { sanityFetch } from "sanity/lib/fetch";
-import { siteSettingsQuery } from "sanity/lib/queries";
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { siteSettingsQuery } from "@/sanity/lib/queries";
 
 import type React from "react";
 
