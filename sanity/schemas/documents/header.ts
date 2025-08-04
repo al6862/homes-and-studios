@@ -6,11 +6,18 @@ export const header = defineType({
   type: "document",
   fields: [
     defineField({
-      name: "title",
-      title: "Title",
-      type: "string",
-      validation: (Rule) => Rule.required(),
-    }),
+      name: 'navList',
+      title: 'Navigation',
+      type: 'array',
+      of: [
+        {
+          type: 'link',
+          options: {
+            enableText: true,
+          },
+        },
+      ],
+    })
   ],
 
   preview: {

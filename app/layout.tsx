@@ -21,7 +21,6 @@ export default async function RootLayout({
 }: {
   children: ReactNode;
 }) {
-
   return (
     <html lang="en">
       {children}

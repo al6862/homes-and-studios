@@ -7,8 +7,9 @@ import { draftMode } from "next/headers";
 
 import AlertBanner from "./alert-banner";
 
+import Header from "@/components/Header";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { siteSettingsQuery } from "@/sanity/lib/queries";
+import { headerQuery, siteSettingsQuery } from "@/sanity/lib/queries";
 
 import type React from "react";
 
@@ -57,9 +58,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const { isEnabled: isDraftMode } = await draftMode();
+  const header = await sanityFetch({query: headerQuery});
 
   return (
     <body>
+      {header && <Header header={header} />}
       <main>
         <section className="min-h-screen">
           {isDraftMode && <AlertBanner />}
