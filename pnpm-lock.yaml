@@ -54,8 +54,8 @@ importers:
         specifier: ^4.0.1
         version: 4.0.1(@emotion/is-prop-valid@1.2.2)(@types/node@22.13.10)(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(immer@10.1.1)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(styled-components@6.1.19(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(typescript@5.8.2)(yaml@2.8.0)
       sanity-plugin-link-field:
-        specifier: ^1.4.0
-        version: 1.4.0(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@18.3.1)(react@19.0.0)(sanity@4.0.1(@emotion/is-prop-valid@1.2.2)(@types/node@22.13.10)(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(immer@10.1.1)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(styled-components@6.1.19(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(typescript@5.8.2)(yaml@2.8.0))
+        specifier: ^1.4.1
+        version: 1.4.1(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@18.3.1)(react@19.0.0)(sanity@4.0.1(@emotion/is-prop-valid@1.2.2)(@types/node@22.13.10)(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(immer@10.1.1)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(styled-components@6.1.19(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(typescript@5.8.2)(yaml@2.8.0))
       sonner:
         specifier: ^2.0.1
         version: 2.0.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -4591,12 +4591,12 @@ packages:
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  sanity-plugin-link-field@1.4.0:
-    resolution: {integrity: sha512-KY+qA4t4Ov7FWpQXTtzKja9AXytK+bY0hIyXzvqqJRz13wIBMugkpTXuqT+zPjwY5PGXUHnaePHmmU4hii1O2Q==}
+  sanity-plugin-link-field@1.4.1:
+    resolution: {integrity: sha512-5WeprSeB8KdB9xzfPH4/pxP6tPWpi1zAflv4wUod0ZuUvTBUU6aFcmsxbjsdGQJkqgENbLpcrDNjuLuj//lqlA==}
     engines: {node: '>=18'}
     peerDependencies:
-      react: ^18
-      sanity: ^3
+      react: ^18 || ^19
+      sanity: ^3 || ^4
 
   sanity@4.0.1:
     resolution: {integrity: sha512-ExVEI6uWBxDnYSZsqMlCnh4XayMHIfrBEAq4Chl7PPdguQNEYlCoqqB6d/y0BhaO9N6i8dNoK+QCt1llb0jNEg==}
@@ -10230,7 +10230,7 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sanity-plugin-link-field@1.4.0(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@18.3.1)(react@19.0.0)(sanity@4.0.1(@emotion/is-prop-valid@1.2.2)(@types/node@22.13.10)(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(immer@10.1.1)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(styled-components@6.1.19(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(typescript@5.8.2)(yaml@2.8.0)):
+  sanity-plugin-link-field@1.4.1(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react-is@18.3.1)(react@19.0.0)(sanity@4.0.1(@emotion/is-prop-valid@1.2.2)(@types/node@22.13.10)(@types/react-dom@19.0.4(@types/react@19.0.12))(@types/react@19.0.12)(immer@10.1.1)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(styled-components@6.1.19(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(typescript@5.8.2)(yaml@2.8.0)):
     dependencies:
       '@sanity/icons': 2.11.8(react@19.0.0)
       '@sanity/incompatible-plugin': 1.0.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
