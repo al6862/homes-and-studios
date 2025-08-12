@@ -31,7 +31,7 @@ export default function Header({ header } : { header : NonNullable<HeaderQueryRe
   return (
     <>
       <motion.div 
-        className="top-0 px-[0.3125rem] py-2 mx-auto"
+        className="max-md:hidden top-0 px-[0.3125rem] py-2 mx-auto"
         initial="maximize"
         variants={variants}
         animate={minimizeHeader ? "minimize" : "maximize"}
@@ -39,7 +39,7 @@ export default function Header({ header } : { header : NonNullable<HeaderQueryRe
         <Logo />
       </motion.div>
       <header className="sticky top-0 px-5 py-3">
-        <div className="flex justify-between">
+        <div className="max-md:hidden flex justify-between">
           <div className="flex gap-8">
             {navList && navList.map((link: LinkValue, i: number) => <Link key={i} link={link} className="nav">{link.text}</Link>)}          
           </div>
