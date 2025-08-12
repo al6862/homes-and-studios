@@ -61,7 +61,7 @@ export default async function RootLayout({
   const header = await sanityFetch({query: headerQuery});
 
   return (
-    <body>
+    <body className="bg-black text-white">
       {header && <Header header={header} />}
       <main>
         <section className="min-h-screen">
