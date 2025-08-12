@@ -3,7 +3,7 @@
 import { HeaderQueryResult } from "@/sanity.types"
 import { motion, useMotionValueEvent, useScroll } from "motion/react"
 import { useState } from "react"
-import { LinkValue } from "sanity-plugin-link-field/helpers"
+import { LinkValue } from "sanity-plugin-link-field"
 import { Link } from "./Link"
 import Logo from "./Logo"
 
