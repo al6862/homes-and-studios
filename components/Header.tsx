@@ -13,7 +13,7 @@ export default function Header({ header } : { header : NonNullable<HeaderQueryRe
   const [minimizeHeader, setMinimizeHeader] = useState(false);
   const variants = {
     minimize: {
-      width: "170px",
+      width: "220px",
       position: 'sticky',
     },
     maximize: {
@@ -31,24 +31,22 @@ export default function Header({ header } : { header : NonNullable<HeaderQueryRe
   return (
     <>
       <motion.div 
-        className="top-[0.6125rem] px-[0.3125rem] py-2 mx-auto"
+        className="top-3 px-[1.5625rem] mt-5 mx-auto"
         initial="maximize"
         variants={variants}
         animate={minimizeHeader ? "minimize" : "maximize"}
       >
         <Logo />
       </motion.div>
-      <header className="sticky top-0 px-5 py-3">
+      <header className="nav sticky top-0 px-5 py-3">
         <div className="flex justify-between">
+          <div className="max-md:hidden space-x-8">
+            {navList && navList.map((link: LinkValue, i: number) => <Link key={i} link={link}>{link.text}</Link>)}          
+          </div>
+          <div className="md:hidden">Menu</div>   
           <div>
-            <div className="max-md:hidden flex gap-8">
-              {navList && navList.map((link: LinkValue, i: number) => <Link key={i} link={link} className="nav">{link.text}</Link>)}          
-            </div>
-            <span className="md:hidden nav">Menu</span>   
-          </div>      
-          <div>
-            <span className="max-md:hidden nav">View A B C</span>
-            <span className="md:hidden nav">Change View</span>
+            <span className="max-md:hidden">View A B C</span>
+            <span className="md:hidden">Change View</span>
           </div>
         </div>
       </header>

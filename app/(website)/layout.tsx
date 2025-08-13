@@ -7,9 +7,10 @@ import { draftMode } from "next/headers";
 
 import AlertBanner from "./alert-banner";
 
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { headerQuery, siteSettingsQuery } from "@/sanity/lib/queries";
+import { footerQuery, headerQuery, siteSettingsQuery } from "@/sanity/lib/queries";
 
 import type React from "react";
 
@@ -58,7 +59,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const { isEnabled: isDraftMode } = await draftMode();
-  const header = await sanityFetch({query: headerQuery});
+  const [header, footer] = await Promise.all([sanityFetch({query: headerQuery}), sanityFetch({query: footerQuery})]);
 
   return (
     <body className="bg-black text-white">
@@ -71,6 +72,7 @@ export default async function RootLayout({
         {isDraftMode && <VisualEditing />}
         <SpeedInsights />
       </main>
+      {footer && <Footer footer={footer} />}
     </body>
   );
 }

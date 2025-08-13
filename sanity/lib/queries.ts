@@ -28,3 +28,9 @@ export const headerQuery = defineQuery(`
         navList[] {${linkData}},
     }
 `);
+
+export const footerQuery = defineQuery(`
+    *[_type == 'footer'][0] {
+        navList[] {${linkData}},
+    }
+`);

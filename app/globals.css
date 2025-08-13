@@ -3,6 +3,11 @@
 @plugin "@tailwindcss/container-queries";
 @plugin "@tailwindcss/typography";
 
+@theme {
+  --color-grey: #898989;
+}
+
+
 @layer base {
   *,
   ::after,
@@ -32,8 +37,22 @@ button {
 }
 
 .nav {
+  font-weight: 500;
   font-size: 0.6875rem;
   line-height: 135%;
-  font-weight: 500;
   letter-spacing: 0.0125rem;
+}
+
+.footer {
+  font-weight: 400;
+  font-style: italic;
+  font-size: 0.625rem;
+  letter-spacing: 0.00625rem;
+}
+
+.copyright {
+  font-weight: 300;
+  font-size: 0.6875rem;
+  line-height: 135%;
+  letter-spacing: 0.01375rem;
 }
