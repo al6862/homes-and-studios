@@ -1,4 +1,4 @@
-import { defineArrayMember, defineField, defineType } from "sanity";
+import { defineField, defineType } from "sanity";
 
 export const footer = defineType({
   name: "footer",
@@ -6,26 +6,16 @@ export const footer = defineType({
   type: "document",
   fields: [
     defineField({
-      name: "newsletterContent",
-      title: "Newsletter Content",
-      type: "array",
+      name: 'navList',
+      title: 'Navigation',
+      type: 'array',
       of: [
-        defineArrayMember({
-          type: "block",
-          styles: [{ title: "Caption", value: "caption" }],
-        }),
-      ],
-    }),
-
-    defineField({
-      name: "footerContent",
-      title: "Footer Content",
-      type: "array",
-      of: [
-        defineArrayMember({
-          type: "block",
-          styles: [{ title: "Caption", value: "caption" }],
-        }),
+        {
+          type: 'link',
+          options: {
+            enableText: true,
+          },
+        },
       ],
     }),
   ],

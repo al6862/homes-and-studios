@@ -48,42 +48,9 @@ export type Footer = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  newsletterContent?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "caption";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
+  navList?: Array<{
     _key: string;
-  }>;
-  footerContent?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "caption";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
+  } & Link>;
 };
 
 export type Header = {
@@ -299,6 +266,32 @@ export type HeaderQueryResult = {
     anchor?: string;
   }> | null;
 } | null;
+// Variable: footerQuery
+// Query: *[_type == 'footer'][0] {        navList[] {    ...,    internalLink->{_type,slug,title}},    }
+export type FooterQueryResult = {
+  navList: Array<{
+    _key: string;
+    _type: "link";
+    text?: string;
+    type: string;
+    internalLink: {
+      _type: "homepage";
+      slug: null;
+      title: null;
+    } | {
+      _type: "page";
+      slug: Slug;
+      title: string;
+    } | null;
+    url?: string;
+    email?: string;
+    phone?: string;
+    value?: string;
+    blank?: boolean;
+    parameters?: string;
+    anchor?: string;
+  }> | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -306,5 +299,6 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "\n    *[_type == 'siteSettings'][0] {\n        SEO {\n    ...,\n    'openGraphImage': openGraphImage.asset->url,\n},\n    }\n": SiteSettingsQueryResult;
     "\n    *[_type == 'header'][0] {\n        navList[] {\n    ...,\n    internalLink->{_type,slug,title}\n},\n    }\n": HeaderQueryResult;
+    "\n    *[_type == 'footer'][0] {\n        navList[] {\n    ...,\n    internalLink->{_type,slug,title}\n},\n    }\n": FooterQueryResult;
   }
 }
