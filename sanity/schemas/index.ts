@@ -1,15 +1,26 @@
 import { type SchemaTypeDefinition } from "sanity";
 
 /* Document Imports */
-import { footer, header, homepage, page, siteSettings } from "./documents";
+import { architecture, footer, header, homepage, page, siteSettings } from "./documents";
 
 /* Object imports */
-import { seo } from "./objects/seo";
+import { callToAction, imageGroup, imageObject, seo, simplePortableText } from "./objects";
 
-const documents = [header, homepage, footer, page, siteSettings];
+const documents = [
+  architecture, 
+  header, 
+  homepage, 
+  footer, 
+  page, 
+  siteSettings
+];
 
 const objects = [
+  callToAction,
+  imageGroup,
+  imageObject,
   seo,
+  simplePortableText,
 ];
 
 export const schema: { types: SchemaTypeDefinition[] } = {

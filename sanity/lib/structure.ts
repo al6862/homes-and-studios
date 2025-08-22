@@ -4,6 +4,7 @@ const singletonTypes = ["header", "footer", "homepage", "siteSettings"];
 
 const documentsHiddenFromContentList = [
   "page",
+  "architecture",
 ];
 
 export const singletonPlugin = definePlugin(() => {
@@ -52,6 +53,14 @@ export const structure: StructureResolver = (S) =>
         .title("Pages")
         .child(
           S.documentTypeList("page").defaultOrdering([
+            { field: "_createdAt", direction: "asc" },
+          ]),
+        ),
+
+      S.listItem()
+        .title("Architecture")
+        .child(
+          S.documentTypeList("architecture").defaultOrdering([
             { field: "_createdAt", direction: "asc" },
           ]),
         ),
