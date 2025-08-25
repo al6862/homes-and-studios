@@ -34,3 +34,10 @@ export const footerQuery = defineQuery(`
         navList[] {${linkData}},
     }
 `);
+
+export const allArchitectureQuery = defineQuery(`
+    *[_type == 'architecture'] | order(title asc) {
+        title,
+        location,
+    }
+`);

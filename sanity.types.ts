@@ -13,6 +13,73 @@
  */
 
 // Source: schema.json
+export type SimplePortableText = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal";
+  listItem?: never;
+  markDefs?: Array<{
+    _key: string;
+  } & Link>;
+  level?: number;
+  _type: "block";
+  _key: string;
+}>;
+
+export type ImageObject = {
+  _type: "imageObject";
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  alt?: string;
+  caption?: string;
+  align?: "left" | "center" | "right";
+  size?: "full" | "large" | "medium" | "small";
+};
+
+export type ImageGroup = {
+  _type: "imageGroup";
+  image1?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  alt1?: string;
+  image2?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  alt2?: string;
+};
+
 export type SiteSettings = {
   _id: string;
   _type: "siteSettings";
@@ -62,6 +129,70 @@ export type Header = {
   navList?: Array<{
     _key: string;
   } & Link>;
+};
+
+export type Architecture = {
+  _id: string;
+  _type: "architecture";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug: Slug;
+  visitLink?: string;
+  author: string;
+  location: string;
+  address: string;
+  descriptionProt?: SimplePortableText;
+  gallery?: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+    _key: string;
+  }>;
+  descriptionProt2?: SimplePortableText;
+  section2?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      _key: string;
+    } & Link>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    _key: string;
+  } & ImageObject | {
+    _key: string;
+  } & ImageGroup>;
+  imageCourtesy?: Array<{
+    title?: string;
+    url?: string;
+    _type: "imageCourtesy";
+    _key: string;
+  }>;
+  footerButton?: CallToAction;
+  metaTitle?: string;
+  metaDesc?: string;
+};
+
+export type CallToAction = {
+  _type: "callToAction";
+  linkText?: string;
+  url?: string;
 };
 
 export type Link = {
@@ -225,7 +356,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = SiteSettings | Seo | Footer | Header | Link | Homepage | Page | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = SimplePortableText | ImageObject | ImageGroup | SiteSettings | Seo | Footer | Header | Architecture | CallToAction | Link | Homepage | Page | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: siteSettingsQuery
@@ -292,6 +423,12 @@ export type FooterQueryResult = {
     anchor?: string;
   }> | null;
 } | null;
+// Variable: allArchitectureQuery
+// Query: *[_type == 'architecture'] | order(title asc) {        title,        location,    }
+export type AllArchitectureQueryResult = Array<{
+  title: string | null;
+  location: string;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -300,5 +437,6 @@ declare module "@sanity/client" {
     "\n    *[_type == 'siteSettings'][0] {\n        SEO {\n    ...,\n    'openGraphImage': openGraphImage.asset->url,\n},\n    }\n": SiteSettingsQueryResult;
     "\n    *[_type == 'header'][0] {\n        navList[] {\n    ...,\n    internalLink->{_type,slug,title}\n},\n    }\n": HeaderQueryResult;
     "\n    *[_type == 'footer'][0] {\n        navList[] {\n    ...,\n    internalLink->{_type,slug,title}\n},\n    }\n": FooterQueryResult;
+    "\n    *[_type == 'architecture'] | order(title asc) {\n        title,\n        location,\n    }\n": AllArchitectureQueryResult;
   }
 }
