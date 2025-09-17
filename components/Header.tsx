@@ -40,9 +40,9 @@ export default function Header({ header } : { header : NonNullable<HeaderQueryRe
       </motion.div>
       <header className="nav sticky top-0 px-5 py-3">
         <div className="flex justify-between">
-          <div className="max-md:hidden space-x-8">
+          <nav className="max-md:hidden space-x-8">
             {navList && navList.map((link: LinkValue, i: number) => <Link key={i} link={link}>{link.text}</Link>)}          
-          </div>
+          </nav>
           <div className="md:hidden">Menu</div>   
           <div>
             <span className="max-md:hidden">View A B C</span>

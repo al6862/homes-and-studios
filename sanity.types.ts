@@ -424,11 +424,58 @@ export type FooterQueryResult = {
   }> | null;
 } | null;
 // Variable: allArchitectureQuery
-// Query: *[_type == 'architecture'] | order(title asc) {        title,        location,    }
+// Query: *[_type == 'architecture'] | order(title asc) {        title,        "slug": slug.current,        location,    }
 export type AllArchitectureQueryResult = Array<{
   title: string | null;
+  slug: string;
   location: string;
 }>;
+// Variable: architectureQuery
+// Query: *[_type == 'architecture' && slug.current == $slug][0] {        "slug": slug.current,        visitLink,        author,        location,        address,        descriptionProt,        gallery[] {    caption,    'assetId': asset->_id,    'assetPath': asset->path,    'aspectRatio': asset->metadata.dimensions.aspectRatio,},        descriptionProt2,        section2,        imageCourtesy,        footerButton,        metaTitle,        metaDesc,    }
+export type ArchitectureQueryResult = {
+  slug: string;
+  visitLink: string | null;
+  author: string;
+  location: string;
+  address: string;
+  descriptionProt: SimplePortableText | null;
+  gallery: Array<{
+    caption: null;
+    assetId: string | null;
+    assetPath: string | null;
+    aspectRatio: number | null;
+  }> | null;
+  descriptionProt2: SimplePortableText | null;
+  section2: Array<{
+    _key: string;
+  } & ImageGroup | {
+    _key: string;
+  } & ImageObject | {
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      _key: string;
+    } & Link>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  imageCourtesy: Array<{
+    title?: string;
+    url?: string;
+    _type: "imageCourtesy";
+    _key: string;
+  }> | null;
+  footerButton: CallToAction | null;
+  metaTitle: string | null;
+  metaDesc: string | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -437,6 +484,7 @@ declare module "@sanity/client" {
     "\n    *[_type == 'siteSettings'][0] {\n        SEO {\n    ...,\n    'openGraphImage': openGraphImage.asset->url,\n},\n    }\n": SiteSettingsQueryResult;
     "\n    *[_type == 'header'][0] {\n        navList[] {\n    ...,\n    internalLink->{_type,slug,title}\n},\n    }\n": HeaderQueryResult;
     "\n    *[_type == 'footer'][0] {\n        navList[] {\n    ...,\n    internalLink->{_type,slug,title}\n},\n    }\n": FooterQueryResult;
-    "\n    *[_type == 'architecture'] | order(title asc) {\n        title,\n        location,\n    }\n": AllArchitectureQueryResult;
+    "\n    *[_type == 'architecture'] | order(title asc) {\n        title,\n        \"slug\": slug.current,\n        location,\n    }\n": AllArchitectureQueryResult;
+    "\n    *[_type == 'architecture' && slug.current == $slug][0] {\n        \"slug\": slug.current,\n        visitLink,\n        author,\n        location,\n        address,\n        descriptionProt,\n        gallery[] {\n    caption,\n    'assetId': asset->_id,\n    'assetPath': asset->path,\n    'aspectRatio': asset->metadata.dimensions.aspectRatio,\n},\n        descriptionProt2,\n        section2,\n        imageCourtesy,\n        footerButton,\n        metaTitle,\n        metaDesc,\n    }\n": ArchitectureQueryResult;
   }
 }

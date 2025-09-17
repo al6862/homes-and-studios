@@ -5,7 +5,7 @@ export default function sanityLoader({
 }: {
   src: any;
   width: any;
-  quality: any;
+  quality?: any;
 }) {
   const url = new URL(`https://cdn.sanity.io/${src}`);
 
