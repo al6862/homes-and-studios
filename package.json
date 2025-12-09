@@ -41,5 +41,16 @@
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^4.0.14",
     "typescript": "5.8.2"
+  },
+  "overrides": {
+    "geist": {
+      "next": "15.6.0-canary.58"
+    },
+    "next-sanity": {
+      "next": "15.6.0-canary.58"
+    },
+    "@vercel/speed-insights": {
+      "next": "15.6.0-canary.58"
+    }
   }
 }
