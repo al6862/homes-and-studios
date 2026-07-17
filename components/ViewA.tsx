@@ -3,6 +3,7 @@ import { AllArchitectureQueryResult, ArchitectureQueryResult } from "@/sanity.ty
 import { client } from '@/sanity/lib/client';
 import { architectureQuery } from "@/sanity/lib/queries";
 import sanityLoader from "@/sanity/lib/sanityImageLoader";
+import { AnimatePresence, motion } from "motion/react";
 import { PortableTextBlock } from "next-sanity";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -59,38 +60,44 @@ export default function ViewA({ allArchitecture, slug, archData } : {allArchitec
           )
         })}
       </div>
-      {activeData && 
-        <div>
-          {activeData.author && <p className="body">{activeData.author}</p>}
-          {activeData.location && <p className="body mt-8 md:mt-5">{activeData.location}</p>}
-          {activeData.descriptionProt && (
-            <CustomPortableText className="body mt-8 md:mt-5" value={activeData.descriptionProt as PortableTextBlock[]} />
-          )}
-          {activeData.gallery && 
-            activeData.gallery.map((image, i) => 
-            image.assetPath &&
-              <Image 
-                loader={sanityLoader}
-                key={i}
-                src={image.assetPath}
-                alt=""
-                width={1440}
-                height={1440}
-                className="mt-8 md:mt-[3.475rem]"
-              />
-            )
-          }
-          {activeData.section2 && (
-            <CustomPortableText className="body mt-8 md:mt-5" value={activeData.section2 as PortableTextBlock[]} />
-          )}
-          {activeData.imageCourtesy && 
-            <p className="text-gray italic body mt-5 [&>*:not(:last-child)]:after:content-[',\00a0']">Images Courtesy Of {activeData.imageCourtesy.map((source, i) => <span key={i}><a href={source.url}>{source.title}</a></span>)}</p>
-          }
-          {activeData.footerButton && 
-            <p className="body mt-5"><a href={activeData.footerButton.url}>{activeData.footerButton.linkText}</a></p>
-          }
-        </div>
-      }
+      <AnimatePresence>
+        {activeData && 
+          <motion.div
+            key={activeData.slug}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {activeData.author && <p className="body">{activeData.author}</p>}
+            {activeData.location && <p className="body mt-8 md:mt-5">{activeData.location}</p>}
+            {activeData.descriptionProt && (
+              <CustomPortableText className="body mt-8 md:mt-5" value={activeData.descriptionProt as PortableTextBlock[]} />
+            )}
+            {activeData.gallery && 
+              activeData.gallery.map((image, i) => 
+              image.assetPath &&
+                <Image 
+                  loader={sanityLoader}
+                  key={i}
+                  src={image.assetPath}
+                  alt=""
+                  width={1440}
+                  height={1440}
+                  className="mt-8 md:mt-[3.475rem]"
+                />
+              )
+            }
+            {activeData.section2 && (
+              <CustomPortableText className="body mt-8 md:mt-5" value={activeData.section2 as PortableTextBlock[]} />
+            )}
+            {activeData.imageCourtesy && 
+              <p className="text-gray italic body mt-5 [&>*:not(:last-child)]:after:content-[',\00a0']">Images Courtesy Of {activeData.imageCourtesy.map((source, i) => <span key={i}><a href={source.url}>{source.title}</a></span>)}</p>
+            }
+            {activeData.footerButton && 
+              <p className="body mt-5"><a href={activeData.footerButton.url}>{activeData.footerButton.linkText}</a></p>
+            }
+          </motion.div>
+        }
+      </AnimatePresence>
     </div>
   )
 }
