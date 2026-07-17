@@ -2,6 +2,7 @@
 
 import { HeaderQueryResult } from "@/sanity.types"
 import { motion, useMotionValueEvent, useScroll } from "motion/react"
+import NextLink from "next/link"
 import { useState } from "react"
 import { LinkValue } from "sanity-plugin-link-field"
 import { Link } from "./Link"
@@ -36,7 +37,9 @@ export default function Header({ header } : { header : NonNullable<HeaderQueryRe
         variants={variants}
         animate={minimizeHeader ? "minimize" : "maximize"}
       >
-        <Logo />
+        <NextLink href="/">
+          <Logo />
+        </NextLink>
       </motion.div>
       <header className="nav sticky top-0 px-5 py-3">
         <div className="flex justify-between">
