@@ -13,7 +13,6 @@ export const page = defineType({
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
-
     defineField({
       name: "slug",
       title: "Slug",
@@ -23,6 +22,31 @@ export const page = defineType({
         maxLength: 150,
       },
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "desktopImage",
+      title: "Desktop Image",
+      description: "If no mobile image, desktop image used on mobile instead.",
+      type: "simpleImageObject",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "mobileImage",
+      title: "Mobile Image",
+      type: "simpleImageObject",
+    }),
+    defineField({
+      name: 'content',
+      type: 'array',
+      title: 'Content',
+      of: [
+        {
+          type: 'block',
+          marks: {
+            annotations: [{ type: 'link' }],
+          },
+        },
+      ],
     }),
   ],
 

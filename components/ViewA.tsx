@@ -2,7 +2,6 @@
 import { AllArchitectureQueryResult, ArchitectureQueryResult } from "@/sanity.types";
 import { client } from '@/sanity/lib/client';
 import { architectureQuery } from "@/sanity/lib/queries";
-import sanityLoader from "@/sanity/lib/sanityImageLoader";
 import { AnimatePresence, motion } from "motion/react";
 import { PortableTextBlock } from "next-sanity";
 import Image from "next/image";
@@ -70,13 +69,12 @@ export default function ViewA({ allArchitecture, slug, archData } : {allArchitec
             {activeData.author && <p className="body">{activeData.author}</p>}
             {activeData.location && <p className="body mt-8 md:mt-5">{activeData.location}</p>}
             {activeData.descriptionProt && (
-              <CustomPortableText className="body mt-8 md:mt-5" value={activeData.descriptionProt as PortableTextBlock[]} />
+              <CustomPortableText className="body text-center mt-8 md:mt-5 space-y-8 md:space-y-5" value={activeData.descriptionProt as PortableTextBlock[]} />
             )}
             {activeData.gallery && 
               activeData.gallery.map((image, i) => 
               image.assetPath &&
                 <Image 
-                  loader={sanityLoader}
                   key={i}
                   src={image.assetPath}
                   alt=""
@@ -87,7 +85,7 @@ export default function ViewA({ allArchitecture, slug, archData } : {allArchitec
               )
             }
             {activeData.section2 && (
-              <CustomPortableText className="body mt-8 md:mt-5" value={activeData.section2 as PortableTextBlock[]} />
+              <CustomPortableText className="body text-center mt-8 md:mt-5 space-y-8 md:space-y-5" value={activeData.section2 as PortableTextBlock[]} />
             )}
             {activeData.imageCourtesy && 
               <p className="text-gray italic body mt-5 [&>*:not(:last-child)]:after:content-[',\00a0']">Images Courtesy Of {activeData.imageCourtesy.map((source, i) => <span key={i}><a href={source.url}>{source.title}</a></span>)}</p>

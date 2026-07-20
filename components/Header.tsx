@@ -44,6 +44,7 @@ export default function Header({ header } : { header : NonNullable<HeaderQueryRe
       <header className="nav sticky top-0 px-5 py-3">
         <div className="flex justify-between">
           <nav className="max-md:hidden space-x-8">
+            <NextLink href="/shop">Shop</NextLink>
             {navList && navList.map((link: LinkValue, i: number) => <Link key={i} link={link}>{link.text}</Link>)}          
           </nav>
           <div className="md:hidden">Menu</div>   

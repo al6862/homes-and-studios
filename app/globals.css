@@ -40,28 +40,28 @@ button {
   font-weight: 500;
   font-size: 0.6875rem;
   line-height: 135%;
-  letter-spacing: 0.0125rem;
+  letter-spacing: 0.02em;
 }
 
 .footer {
   font-weight: 400;
   font-style: italic;
   font-size: 0.625rem;
-  letter-spacing: 0.00625rem;
+  letter-spacing: 0.01em;
 }
 
 .copyright {
   font-weight: 300;
   font-size: 0.6875rem;
   line-height: 135%;
-  letter-spacing: 0.01375rem;
+  letter-spacing: 0.01em;
 }
 
 .alphabet-break {
   font-weight: 100;
   font-size: 0.75rem;
   line-height: 100%;
-  letter-spacing: 38%;
+  letter-spacing: 0.38em;
   text-transform: uppercase;
 }
 
@@ -69,14 +69,14 @@ button {
   font-weight: 400;
   font-size: 14px;
   line-height: 100%;
-  letter-spacing: 1%;
+  letter-spacing: 0.01em;
 }
 
 .location {
   font-weight: 600;
   font-size: 10px;
   line-height: 135%;
-  letter-spacing: 3%;
+  letter-spacing: 0.03em;
 }
 
 .body {
@@ -84,7 +84,6 @@ button {
   font-style: Regular;
   font-size: 12px;
   line-height: 100%;
-  letter-spacing: 1%;
-  text-align: center;
+  letter-spacing: 0.01em;
   vertical-align: bottom;
 }
