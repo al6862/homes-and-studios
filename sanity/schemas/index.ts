@@ -4,7 +4,7 @@ import { type SchemaTypeDefinition } from "sanity";
 import { architecture, footer, header, homepage, page, siteSettings } from "./documents";
 
 /* Object imports */
-import { callToAction, imageGroup, imageObject, seo, simplePortableText } from "./objects";
+import { callToAction, imageGroup, imageObject, seo, simpleImageObject, simplePortableText } from "./objects";
 
 const documents = [
   architecture, 
@@ -20,6 +20,7 @@ const objects = [
   imageGroup,
   imageObject,
   seo,
+  simpleImageObject,
   simplePortableText,
 ];
 

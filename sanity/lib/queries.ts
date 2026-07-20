@@ -94,3 +94,12 @@ export const architectureQuery = defineQuery(`
         metaDesc,
     }
 `);
+
+export const pageQuery = defineQuery(`
+    *[_type == 'page' && slug.current == $slug][0] {
+        "slug": slug.current,
+        desktopImage {${imageObjectData}},
+        mobileImage {${imageObjectData}},
+        content[] {${contentData}},
+    }
+`);

@@ -5,6 +5,8 @@ export default {
   },
   images: {
     formats: ['image/avif', 'image/webp'],
+    loader: 'custom',
+    loaderFile: './sanity/lib/sanityImageLoader.ts',
     remotePatterns: [
       {
         protocol: 'https',

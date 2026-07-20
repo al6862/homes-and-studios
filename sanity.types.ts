@@ -30,6 +30,43 @@ export type SimplePortableText = Array<{
   _key: string;
 }>;
 
+export type SimpleImageObject = {
+  _type: "simpleImageObject";
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  alt?: string;
+};
+
+export type Seo = {
+  _type: "seo";
+  metaTitle?: string;
+  metaDescription?: string;
+  openGraphTitle?: string;
+  openGraphDescription?: string;
+  openGraphImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+};
+
 export type ImageObject = {
   _type: "imageObject";
   image?: {
@@ -80,6 +117,12 @@ export type ImageGroup = {
   alt2?: string;
 };
 
+export type CallToAction = {
+  _type: "callToAction";
+  linkText?: string;
+  url?: string;
+};
+
 export type SiteSettings = {
   _id: string;
   _type: "siteSettings";
@@ -89,24 +132,20 @@ export type SiteSettings = {
   SEO?: Seo;
 };
 
-export type Seo = {
-  _type: "seo";
-  metaTitle?: string;
-  metaDescription?: string;
-  openGraphTitle?: string;
-  openGraphDescription?: string;
-  openGraphImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
 };
 
 export type Footer = {
@@ -189,10 +228,10 @@ export type Architecture = {
   metaDesc?: string;
 };
 
-export type CallToAction = {
-  _type: "callToAction";
-  linkText?: string;
-  url?: string;
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
 };
 
 export type Link = {
@@ -236,6 +275,24 @@ export type Page = {
   _rev: string;
   title: string;
   slug: Slug;
+  desktopImage: SimpleImageObject;
+  mobileImage?: SimpleImageObject;
+  content?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      _key: string;
+    } & Link>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -259,25 +316,20 @@ export type SanityImagePalette = {
 
 export type SanityImageDimensions = {
   _type: "sanity.imageDimensions";
-  height?: number;
-  width?: number;
-  aspectRatio?: number;
+  height: number;
+  width: number;
+  aspectRatio: number;
 };
 
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
+export type SanityImageMetadata = {
+  _type: "sanity.imageMetadata";
+  location?: Geopoint;
+  dimensions?: SanityImageDimensions;
+  palette?: SanityImagePalette;
+  lqip?: string;
+  blurHash?: string;
+  hasAlpha?: boolean;
+  isOpaque?: boolean;
 };
 
 export type SanityFileAsset = {
@@ -300,6 +352,13 @@ export type SanityFileAsset = {
   path?: string;
   url?: string;
   source?: SanityAssetSourceData;
+};
+
+export type SanityAssetSourceData = {
+  _type: "sanity.assetSourceData";
+  name?: string;
+  id?: string;
+  url?: string;
 };
 
 export type SanityImageAsset = {
@@ -325,17 +384,6 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData;
 };
 
-export type SanityImageMetadata = {
-  _type: "sanity.imageMetadata";
-  location?: Geopoint;
-  dimensions?: SanityImageDimensions;
-  palette?: SanityImagePalette;
-  lqip?: string;
-  blurHash?: string;
-  hasAlpha?: boolean;
-  isOpaque?: boolean;
-};
-
 export type Geopoint = {
   _type: "geopoint";
   lat?: number;
@@ -343,20 +391,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
-};
-
-export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
-  name?: string;
-  id?: string;
-  url?: string;
-};
-
-export type AllSanitySchemaTypes = SimplePortableText | ImageObject | ImageGroup | SiteSettings | Seo | Footer | Header | Architecture | CallToAction | Link | Homepage | Page | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = SimplePortableText | SimpleImageObject | Seo | ImageObject | ImageGroup | CallToAction | SiteSettings | SanityImageCrop | SanityImageHotspot | Footer | Header | Architecture | Slug | Link | Homepage | Page | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: siteSettingsQuery
@@ -431,7 +466,7 @@ export type AllArchitectureQueryResult = Array<{
   location: string;
 }>;
 // Variable: architectureQuery
-// Query: *[_type == 'architecture' && slug.current == $slug][0] {        "slug": slug.current,        visitLink,        author,        location,        address,        descriptionProt,        gallery[] {    caption,    'assetId': asset->_id,    'assetPath': asset->path,    'aspectRatio': asset->metadata.dimensions.aspectRatio,},        descriptionProt2,        section2,        imageCourtesy,        footerButton,        metaTitle,        metaDesc,    }
+// Query: *[_type == 'architecture' && slug.current == $slug][0] {        "slug": slug.current,        visitLink,        author,        location,        address,        descriptionProt,        gallery[] {    caption,    'assetId': asset->_id,    'assetPath': asset->path,    'aspectRatio': asset->metadata.dimensions.aspectRatio,},        descriptionProt2,        section2[] {    ...,    markDefs[]{        ...,        _type == "link" => {    ...,    internalLink->{_type,slug,title}}    },    _type == "imageGroup" => {    ...,    image1 {        'assetId': asset->_id,        'assetPath': asset->path,        'aspectRatio': asset->metadata.dimensions.aspectRatio,    },    image2 {        'assetId': asset->_id,        'assetPath': asset->path,        'aspectRatio': asset->metadata.dimensions.aspectRatio,    }},    _type == "imageObject" => {    ...,    image {        'assetId': asset->_id,        'assetPath': asset->path,        'aspectRatio': asset->metadata.dimensions.aspectRatio,    }}},        imageCourtesy,        footerButton,        metaTitle,        metaDesc,    }
 export type ArchitectureQueryResult = {
   slug: string;
   visitLink: string | null;
@@ -447,10 +482,6 @@ export type ArchitectureQueryResult = {
   }> | null;
   descriptionProt2: SimplePortableText | null;
   section2: Array<{
-    _key: string;
-  } & ImageGroup | {
-    _key: string;
-  } & ImageObject | {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
@@ -459,12 +490,60 @@ export type ArchitectureQueryResult = {
     }>;
     style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
     listItem?: "bullet" | "number";
-    markDefs?: Array<{
+    markDefs: Array<{
       _key: string;
-    } & Link>;
+      _type: "link";
+      text?: string;
+      type: string;
+      internalLink: {
+        _type: "homepage";
+        slug: null;
+        title: null;
+      } | {
+        _type: "page";
+        slug: Slug;
+        title: string;
+      } | null;
+      url?: string;
+      email?: string;
+      phone?: string;
+      value?: string;
+      blank?: boolean;
+      parameters?: string;
+      anchor?: string;
+    }> | null;
     level?: number;
     _type: "block";
     _key: string;
+  } | {
+    _key: string;
+    _type: "imageGroup";
+    image1: {
+      assetId: string | null;
+      assetPath: string | null;
+      aspectRatio: number | null;
+    } | null;
+    alt1?: string;
+    image2: {
+      assetId: string | null;
+      assetPath: string | null;
+      aspectRatio: number | null;
+    } | null;
+    alt2?: string;
+    markDefs: null;
+  } | {
+    _key: string;
+    _type: "imageObject";
+    image: {
+      assetId: string | null;
+      assetPath: string | null;
+      aspectRatio: number | null;
+    } | null;
+    alt?: string;
+    caption?: string;
+    align?: "center" | "left" | "right";
+    size?: "full" | "large" | "medium" | "small";
+    markDefs: null;
   }> | null;
   imageCourtesy: Array<{
     title?: string;
@@ -476,6 +555,64 @@ export type ArchitectureQueryResult = {
   metaTitle: string | null;
   metaDesc: string | null;
 } | null;
+// Variable: pageQuery
+// Query: *[_type == 'page' && slug.current == $slug][0] {        "slug": slug.current,        desktopImage {    ...,    image {        'assetId': asset->_id,        'assetPath': asset->path,        'aspectRatio': asset->metadata.dimensions.aspectRatio,    }},        mobileImage {    ...,    image {        'assetId': asset->_id,        'assetPath': asset->path,        'aspectRatio': asset->metadata.dimensions.aspectRatio,    }},        content[] {    ...,    markDefs[]{        ...,        _type == "link" => {    ...,    internalLink->{_type,slug,title}}    },    _type == "imageGroup" => {    ...,    image1 {        'assetId': asset->_id,        'assetPath': asset->path,        'aspectRatio': asset->metadata.dimensions.aspectRatio,    },    image2 {        'assetId': asset->_id,        'assetPath': asset->path,        'aspectRatio': asset->metadata.dimensions.aspectRatio,    }},    _type == "imageObject" => {    ...,    image {        'assetId': asset->_id,        'assetPath': asset->path,        'aspectRatio': asset->metadata.dimensions.aspectRatio,    }}},    }
+export type PageQueryResult = {
+  slug: string;
+  desktopImage: {
+    _type: "simpleImageObject";
+    image: {
+      assetId: string | null;
+      assetPath: string | null;
+      aspectRatio: number | null;
+    } | null;
+    alt?: string;
+  };
+  mobileImage: {
+    _type: "simpleImageObject";
+    image: {
+      assetId: string | null;
+      assetPath: string | null;
+      aspectRatio: number | null;
+    } | null;
+    alt?: string;
+  } | null;
+  content: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs: Array<{
+      _key: string;
+      _type: "link";
+      text?: string;
+      type: string;
+      internalLink: {
+        _type: "homepage";
+        slug: null;
+        title: null;
+      } | {
+        _type: "page";
+        slug: Slug;
+        title: string;
+      } | null;
+      url?: string;
+      email?: string;
+      phone?: string;
+      value?: string;
+      blank?: boolean;
+      parameters?: string;
+      anchor?: string;
+    }> | null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -485,6 +622,7 @@ declare module "@sanity/client" {
     "\n    *[_type == 'header'][0] {\n        navList[] {\n    ...,\n    internalLink->{_type,slug,title}\n},\n    }\n": HeaderQueryResult;
     "\n    *[_type == 'footer'][0] {\n        navList[] {\n    ...,\n    internalLink->{_type,slug,title}\n},\n    }\n": FooterQueryResult;
     "\n    *[_type == 'architecture'] | order(title asc) {\n        title,\n        \"slug\": slug.current,\n        location,\n    }\n": AllArchitectureQueryResult;
-    "\n    *[_type == 'architecture' && slug.current == $slug][0] {\n        \"slug\": slug.current,\n        visitLink,\n        author,\n        location,\n        address,\n        descriptionProt,\n        gallery[] {\n    caption,\n    'assetId': asset->_id,\n    'assetPath': asset->path,\n    'aspectRatio': asset->metadata.dimensions.aspectRatio,\n},\n        descriptionProt2,\n        section2,\n        imageCourtesy,\n        footerButton,\n        metaTitle,\n        metaDesc,\n    }\n": ArchitectureQueryResult;
+    "\n    *[_type == 'architecture' && slug.current == $slug][0] {\n        \"slug\": slug.current,\n        visitLink,\n        author,\n        location,\n        address,\n        descriptionProt,\n        gallery[] {\n    caption,\n    'assetId': asset->_id,\n    'assetPath': asset->path,\n    'aspectRatio': asset->metadata.dimensions.aspectRatio,\n},\n        descriptionProt2,\n        section2[] {\n    ...,\n    markDefs[]{\n        ...,\n        _type == \"link\" => {\n    ...,\n    internalLink->{_type,slug,title}\n}\n    },\n    _type == \"imageGroup\" => {\n    ...,\n    image1 {\n        'assetId': asset->_id,\n        'assetPath': asset->path,\n        'aspectRatio': asset->metadata.dimensions.aspectRatio,\n    },\n    image2 {\n        'assetId': asset->_id,\n        'assetPath': asset->path,\n        'aspectRatio': asset->metadata.dimensions.aspectRatio,\n    }\n},\n    _type == \"imageObject\" => {\n    ...,\n    image {\n        'assetId': asset->_id,\n        'assetPath': asset->path,\n        'aspectRatio': asset->metadata.dimensions.aspectRatio,\n    }\n}\n},\n        imageCourtesy,\n        footerButton,\n        metaTitle,\n        metaDesc,\n    }\n": ArchitectureQueryResult;
+    "\n    *[_type == 'page' && slug.current == $slug][0] {\n        \"slug\": slug.current,\n        desktopImage {\n    ...,\n    image {\n        'assetId': asset->_id,\n        'assetPath': asset->path,\n        'aspectRatio': asset->metadata.dimensions.aspectRatio,\n    }\n},\n        mobileImage {\n    ...,\n    image {\n        'assetId': asset->_id,\n        'assetPath': asset->path,\n        'aspectRatio': asset->metadata.dimensions.aspectRatio,\n    }\n},\n        content[] {\n    ...,\n    markDefs[]{\n        ...,\n        _type == \"link\" => {\n    ...,\n    internalLink->{_type,slug,title}\n}\n    },\n    _type == \"imageGroup\" => {\n    ...,\n    image1 {\n        'assetId': asset->_id,\n        'assetPath': asset->path,\n        'aspectRatio': asset->metadata.dimensions.aspectRatio,\n    },\n    image2 {\n        'assetId': asset->_id,\n        'assetPath': asset->path,\n        'aspectRatio': asset->metadata.dimensions.aspectRatio,\n    }\n},\n    _type == \"imageObject\" => {\n    ...,\n    image {\n        'assetId': asset->_id,\n        'assetPath': asset->path,\n        'aspectRatio': asset->metadata.dimensions.aspectRatio,\n    }\n}\n},\n    }\n": PageQueryResult;
   }
 }

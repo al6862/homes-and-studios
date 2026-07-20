@@ -1,4 +1,3 @@
-import sanityLoader from '@/sanity/lib/sanityImageLoader';
 import {
   PortableText,
   type PortableTextBlock,
@@ -11,25 +10,25 @@ export function CustomPortableText({ className, value }: { className?: string, v
   const components: PortableTextComponents = {
     block: {
       h1: ({ children }) => {
-        return <h2 className={'h1 mt-8 md:mt-5'}>{children}</h2>
+        return <h2 className={'h1'}>{children}</h2>
       },
       h2: ({ children }) => {
-        return <h3 className={'h2 mt-8 md:mt-5'}>{children}</h3>
+        return <h3 className={'h2'}>{children}</h3>
       },
       h3: ({ children }) => {
-        return <h4 className={'h3 mt-8 md:mt-5'}>{children}</h4>
+        return <h4 className={'h3'}>{children}</h4>
       },
       h4: ({ children }) => {
-        return <h5 className={'h4 mt-8 md:mt-5'}>{children}</h5>
+        return <h5 className={'h4'}>{children}</h5>
       },
       h5: ({ children }) => {
-        return <h6 className={'h5 mt-8 md:mt-5'}>{children}</h6>
+        return <h6 className={'h5'}>{children}</h6>
       },
       h6: ({ children }) => {
-        return <h6 className={'h6 mt-8 md:mt-5'}>{children}</h6>
+        return <h6 className={'h6'}>{children}</h6>
       },
       normal: ({ children }) => {
-        return <p className="mt-8 md:mt-5">{children}</p>
+        return <p>{children}</p>
       },
     },
     marks: {
@@ -45,7 +44,6 @@ export function CustomPortableText({ className, value }: { className?: string, v
         return (
           <div>
             {image1.assetPath && <Image 
-              loader={sanityLoader}
               src={image1.assetPath}
               alt={alt1 || ""}
               width={1440}
@@ -53,7 +51,6 @@ export function CustomPortableText({ className, value }: { className?: string, v
               className="mt-8 md:mt-[3.475rem]"
             />}
             {image2.assetPath && <Image 
-              loader={sanityLoader}
               src={image2.assetPath}
               alt={alt2 || ""}
               width={1440}
@@ -67,7 +64,6 @@ export function CustomPortableText({ className, value }: { className?: string, v
         const { image, alt } = value;
         return (
           <Image 
-            loader={sanityLoader}
             src={image.assetPath}
             alt={alt || ""}
             width={1440}
