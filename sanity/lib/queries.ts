@@ -31,7 +31,6 @@ const imageGroupData = `
     }
 `;
 
-
 const imageObjectData = `
     ...,
     image {
@@ -49,7 +48,7 @@ const contentData = `
     },
     _type == "imageGroup" => {${imageGroupData}},
     _type == "imageObject" => {${imageObjectData}}
-`
+`;
 
 export const siteSettingsQuery = defineQuery(`
     *[_type == 'siteSettings'][0] {
@@ -74,6 +73,7 @@ export const allArchitectureQuery = defineQuery(`
         title,
         "slug": slug.current,
         location,
+        "coverImage": gallery[0] {${imageData}},
     }
 `);
 
