@@ -15,7 +15,7 @@ export default function Views({
   return (
     <div>
       {/* <ViewA allArchitecture={allArchitecture} /> */}
-      {view === "A" ? (
+      {view === "B" ? (
         <ViewA allArchitecture={allArchitecture} />
       ) : (
         <ViewB allArchitecture={allArchitecture} />

@@ -9,30 +9,27 @@ export default function ViewB({
   allArchitecture: AllArchitectureQueryResult;
 }) {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-x-[3.472vw] gap-y-[3.194vw] px-5">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-x-[3.472vw] md:gap-y-[3.194vw] px-5">
       {allArchitecture.map((architecture, i) => {
         const { title, location, coverImage } = architecture;
         return (
-          <div key={i} className="flex gap-[0.833vw] items-start">
+          <div
+            key={i}
+            className="flex flex-col gap-[2.804vw] md:flex-row md:gap-[0.833vw] md:items-start"
+          >
             {coverImage?.assetPath && (
               <Image
                 src={coverImage.assetPath}
                 alt=""
-                width={123}
-                height={150}
-                className="w-[10.417vw] h-[10.417vw] object-cover shrink-0"
+                width={400}
+                height={489}
+                className="w-full aspect-[184/225] object-cover md:w-[10.417vw] md:h-[10.417vw] md:aspect-auto md:shrink-0"
               />
             )}
-            <div className="flex-1">
-              {title && (
-                <p className="title" style={{ fontSize: "11px" }}>
-                  {title}
-                </p>
-              )}
+            <div className="w-full md:flex-1 flex flex-col gap-[1.869vw] md:gap-0">
+              {title && <p className="title viewb-title">{title}</p>}
               {location && (
-                <p className="location text-gray" style={{ fontSize: "9px" }}>
-                  {location}
-                </p>
+                <p className="location text-gray viewb-location">{location}</p>
               )}
             </div>
           </div>

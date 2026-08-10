@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @plugin "@tailwindcss/container-queries";
 @plugin "@tailwindcss/typography";
@@ -6,7 +6,6 @@
 @theme {
   --color-gray: #898989;
 }
-
 
 @layer base {
   *,
@@ -25,7 +24,7 @@
 }
 
 @supports (font: -apple-system-body) and (-webkit-appearance: none) {
-  img[loading='lazy'] {
+  img[loading="lazy"] {
     clip-path: inset(0.6px);
   }
 }
@@ -86,4 +85,14 @@ button {
   line-height: 100%;
   letter-spacing: 0.01em;
   vertical-align: bottom;
+}
+
+@media (min-width: 768px) {
+  .viewb-title {
+    font-size: 11px;
+  }
+
+  .viewb-location {
+    font-size: 9px;
+  }
 }

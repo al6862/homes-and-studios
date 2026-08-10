@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState } from "react";
 
-type View = "A" | "B";
+export type View = "A" | "B" | "C";
 
 type ViewContextType = {
   view: View;

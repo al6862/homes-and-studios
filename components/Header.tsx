@@ -7,7 +7,7 @@ import { useState } from "react";
 import { LinkValue } from "sanity-plugin-link-field";
 import { Link } from "./Link";
 import Logo from "./Logo";
-import { useView } from "./view-context";
+import { useView, View } from "./view-context";
 
 export default function Header({
   header,
@@ -35,10 +35,16 @@ export default function Header({
       setMinimizeHeader(false);
     }
   });
+
+  const cycleView = () => {
+    const nextViewMap: Record<View, View> = { A: "B", B: "C", C: "A" };
+    setView(nextViewMap[view]);
+  };
+
   return (
     <>
       <motion.div
-        className="top-3 px-[1.5625rem] mt-5 mx-auto"
+        className="max-md:hidden top-3 px-[1.5625rem] mt-5 mx-auto"
         initial="maximize"
         variants={variants}
         animate={minimizeHeader ? "minimize" : "maximize"}
@@ -48,8 +54,8 @@ export default function Header({
         </NextLink>
       </motion.div>
       <header className="nav sticky top-0 px-5 py-3">
-        <div className="flex justify-between">
-          <nav className="max-md:hidden space-x-8">
+        <div className="max-md:hidden flex justify-between">
+          <nav className="space-x-8">
             <NextLink href="/shop">Shop</NextLink>
             {navList &&
               navList.map((link: LinkValue, i: number) => (
@@ -58,11 +64,6 @@ export default function Header({
                 </Link>
               ))}
           </nav>
-
-          {/* <div>
-            <span className="max-md:hidden">View A B C</span>
-            <span className="md:hidden">Change View</span>
-          </div> */}
           <div className="flex gap-2">
             <div className="">View</div>
             <span
@@ -82,10 +83,19 @@ export default function Header({
               <span style={{ opacity: view === "B" ? 1 : 0 }}> )</span>
             </span>
             <span className="alphabet-break text-gray">
-              <span style={{ opacity: 0 }}>( </span>
-              <span style={{ fontWeight: 275 }}>C</span>
-              <span style={{ opacity: 0 }}> )</span>
+              <span style={{ opacity: view === "C" ? 1 : 0 }}>( </span>
+              <span style={{ fontWeight: view === "C" ? 400 : 275 }}>C</span>
+              <span style={{ opacity: view === "C" ? 1 : 0 }}> )</span>
             </span>
+          </div>
+        </div>
+        <div className="md:hidden grid grid-cols-[1fr_auto_1fr] items-center">
+          <div>Menu</div>
+          <NextLink href="/" className="justify-self-center">
+            <Logo />
+          </NextLink>
+          <div className="justify-self-end cursor-pointer" onClick={cycleView}>
+            Change View
           </div>
         </div>
       </header>
