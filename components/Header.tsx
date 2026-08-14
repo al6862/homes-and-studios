@@ -65,27 +65,27 @@ export default function Header({
               ))}
           </nav>
           <div className="flex gap-2">
-            <div className="">View</div>
+            <div className="mr-[3px]">View</div>
             <span
               onClick={() => setView("A")}
               className="alphabet-break cursor-pointer"
             >
-              <span style={{ opacity: view === "A" ? 1 : 0 }}>( </span>
+              <span style={{ opacity: view === "A" ? 1 : 0 }}>(</span>
               <span style={{ fontWeight: view === "A" ? 400 : 275 }}>A</span>
-              <span style={{ opacity: view === "A" ? 1 : 0 }}> )</span>
+              <span style={{ opacity: view === "A" ? 1 : 0 }}>)</span>
             </span>
             <span
               onClick={() => setView("B")}
               className="alphabet-break cursor-pointer"
             >
-              <span style={{ opacity: view === "B" ? 1 : 0 }}>( </span>
+              <span style={{ opacity: view === "B" ? 1 : 0 }}>(</span>
               <span style={{ fontWeight: view === "B" ? 400 : 275 }}>B</span>
-              <span style={{ opacity: view === "B" ? 1 : 0 }}> )</span>
+              <span style={{ opacity: view === "B" ? 1 : 0 }}>)</span>
             </span>
             <span className="alphabet-break text-gray">
-              <span style={{ opacity: view === "C" ? 1 : 0 }}>( </span>
+              <span style={{ opacity: view === "C" ? 1 : 0 }}>(</span>
               <span style={{ fontWeight: view === "C" ? 400 : 275 }}>C</span>
-              <span style={{ opacity: view === "C" ? 1 : 0 }}> )</span>
+              <span style={{ opacity: view === "C" ? 1 : 0 }}>)</span>
             </span>
           </div>
         </div>
