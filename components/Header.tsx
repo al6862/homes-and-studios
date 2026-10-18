@@ -18,6 +18,7 @@ export default function Header({
   const { scrollY } = useScroll();
   const [minimizeHeader, setMinimizeHeader] = useState(false);
   const { view, setView } = useView();
+  const isViewC = view === "C";
   const variants = {
     minimize: {
       width: "220px",
@@ -44,16 +45,26 @@ export default function Header({
   return (
     <>
       <motion.div
-        className="max-md:hidden top-3 px-[1.5625rem] mt-5 mx-auto"
+        className={`max-md:hidden px-[1.5625rem] mt-5 mx-auto ${
+          isViewC
+            ? "fixed! inset-x-0 top-0 z-20 text-warm-white mix-blend-hard-light"
+            : "top-3"
+        }`}
         initial="maximize"
         variants={variants}
-        animate={minimizeHeader ? "minimize" : "maximize"}
+        animate={isViewC || minimizeHeader ? "minimize" : "maximize"}
       >
         <NextLink href="/">
           <Logo />
         </NextLink>
       </motion.div>
-      <header className="nav sticky top-0 px-5 py-3">
+      <header
+        className={`nav px-5 py-3 ${
+          isViewC
+            ? "fixed inset-x-0 top-0 z-10 max-md:mix-blend-hard-light"
+            : "sticky top-0"
+        }`}
+      >
         <div className="max-md:hidden flex justify-between">
           <nav className="space-x-8">
             <NextLink href="/shop">Shop</NextLink>
@@ -66,27 +77,17 @@ export default function Header({
           </nav>
           <div className="flex gap-2">
             <div className="mr-[3px]">View</div>
-            <span
-              onClick={() => setView("A")}
-              className="alphabet-break cursor-pointer"
-            >
-              <span style={{ opacity: view === "A" ? 1 : 0 }}>(</span>
-              <span style={{ fontWeight: view === "A" ? 400 : 275 }}>A</span>
-              <span style={{ opacity: view === "A" ? 1 : 0 }}>)</span>
-            </span>
-            <span
-              onClick={() => setView("B")}
-              className="alphabet-break cursor-pointer"
-            >
-              <span style={{ opacity: view === "B" ? 1 : 0 }}>(</span>
-              <span style={{ fontWeight: view === "B" ? 400 : 275 }}>B</span>
-              <span style={{ opacity: view === "B" ? 1 : 0 }}>)</span>
-            </span>
-            <span className="alphabet-break text-gray">
-              <span style={{ opacity: view === "C" ? 1 : 0 }}>(</span>
-              <span style={{ fontWeight: view === "C" ? 400 : 275 }}>C</span>
-              <span style={{ opacity: view === "C" ? 1 : 0 }}>)</span>
-            </span>
+            {(["A", "B", "C"] as const).map((v) => (
+              <span
+                key={v}
+                onClick={() => setView(v)}
+                className={`alphabet-break cursor-pointer ${view === v ? "text-gray" : ""}`}
+              >
+                <span style={{ opacity: view === v ? 1 : 0 }}>(</span>
+                <span style={{ fontWeight: view === v ? 400 : 275 }}>{v}</span>
+                <span style={{ opacity: view === v ? 1 : 0 }}>)</span>
+              </span>
+            ))}
           </div>
         </div>
         <div className="md:hidden grid grid-cols-[1fr_auto_1fr] items-center">

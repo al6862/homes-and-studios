@@ -1,7 +1,6 @@
 "use client";
 import {
   AllArchitectureQueryResult,
-  ArchitectureQueryResult,
 } from "@/sanity.types";
 import { client } from "@/sanity/lib/client";
 import { architectureQuery } from "@/sanity/lib/queries";
@@ -9,29 +8,22 @@ import { AnimatePresence, motion } from "motion/react";
 import { PortableTextBlock } from "next-sanity";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useView } from "./view-context";
 import { CustomPortableText } from "./CustomPortableText";
 
 export default function ViewA({
   allArchitecture,
-  slug,
-  archData,
 }: {
   allArchitecture: AllArchitectureQueryResult;
-  slug?: string;
-  archData?: ArchitectureQueryResult;
 }) {
-  const [activeSlug, setActiveSlug] = useState<string | undefined>(
-    slug || undefined,
-  );
-  const [activeData, setActiveData] = useState<ArchitectureQueryResult>(
-    archData || null,
-  );
+  const { activeProject, setActiveProject } = useView();
+  const activeSlug = activeProject?.slug;
+
   const pathname = usePathname();
   const setNewData = async (slug: string) => {
     const archData = await client.fetch(architectureQuery, { slug });
-    setActiveSlug(archData?.slug);
-    setActiveData(archData);
+    setActiveProject(archData);
     window.history.pushState({}, "", `/${archData?.slug}`);
   };
 
@@ -48,8 +40,7 @@ export default function ViewA({
 
   useEffect(() => {
     if (pathname == "/") {
-      setActiveSlug(undefined);
-      setActiveData(null);
+      setActiveProject(null);
     } else {
       const newSlug = pathname.split("/")[1];
       if (newSlug && newSlug != activeSlug) {
@@ -91,24 +82,24 @@ export default function ViewA({
         })}
       </div>
       <AnimatePresence>
-        {activeData && (
+        {activeProject && (
           <motion.div
-            key={activeData.slug}
+            key={activeProject.slug}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            {activeData.author && <p className="body">{activeData.author}</p>}
-            {activeData.location && (
-              <p className="body mt-8 md:mt-5">{activeData.location}</p>
+            {activeProject.author && <p className="body">{activeProject.author}</p>}
+            {activeProject.location && (
+              <p className="body mt-8 md:mt-5">{activeProject.location}</p>
             )}
-            {activeData.descriptionProt && (
+            {activeProject.descriptionProt && (
               <CustomPortableText
                 className="body text-center mt-8 md:mt-5 space-y-8 md:space-y-5"
-                value={activeData.descriptionProt as PortableTextBlock[]}
+                value={activeProject.descriptionProt as PortableTextBlock[]}
               />
             )}
-            {activeData.gallery &&
-              activeData.gallery.map(
+            {activeProject.gallery &&
+              activeProject.gallery.map(
                 (image, i) =>
                   image.assetPath && (
                     <Image
@@ -121,26 +112,26 @@ export default function ViewA({
                     />
                   ),
               )}
-            {activeData.section2 && (
+            {activeProject.section2 && (
               <CustomPortableText
                 className="body text-center mt-8 md:mt-5 space-y-8 md:space-y-5"
-                value={activeData.section2 as PortableTextBlock[]}
+                value={activeProject.section2 as PortableTextBlock[]}
               />
             )}
-            {activeData.imageCourtesy && (
+            {activeProject.imageCourtesy && (
               <p className="text-gray italic body mt-5 [&>*:not(:last-child)]:after:content-[',\00a0']">
                 Images Courtesy Of{" "}
-                {activeData.imageCourtesy.map((source, i) => (
+                {activeProject.imageCourtesy.map((source, i) => (
                   <span key={i}>
                     <a href={source.url}>{source.title}</a>
                   </span>
                 ))}
               </p>
             )}
-            {activeData.footerButton && (
+            {activeProject.footerButton && (
               <p className="body mt-5">
-                <a href={activeData.footerButton.url}>
-                  {activeData.footerButton.linkText}
+                <a href={activeProject.footerButton.url}>
+                  {activeProject.footerButton.linkText}
                 </a>
               </p>
             )}

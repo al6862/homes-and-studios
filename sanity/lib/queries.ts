@@ -79,6 +79,7 @@ export const allArchitectureQuery = defineQuery(`
 
 export const architectureQuery = defineQuery(`
     *[_type == 'architecture' && slug.current == $slug][0] {
+        title,
         "slug": slug.current,
         visitLink,
         author,

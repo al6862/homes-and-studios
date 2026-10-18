@@ -1,17 +1,18 @@
 // import ViewA from "@/components/ViewA";
 import Views from "@/components/Views";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { allArchitectureQuery } from "@/sanity/lib/queries";
+import { allArchitectureQuery, architectureQuery } from "@/sanity/lib/queries";
 
 export default async function Page() {
-  const [allArchitecture] = await Promise.all([
-    sanityFetch({ query: allArchitectureQuery }),
-  ]);
+  const allArchitecture = await sanityFetch({ query: allArchitectureQuery });
+  const defaultProject = allArchitecture[0]
+    ? await sanityFetch({
+        query: architectureQuery,
+        params: { slug: allArchitecture[0].slug },
+      })
+    : null;
 
   return (
-    <div>
-      {/* <ViewA allArchitecture={allArchitecture} /> */}
-      <Views allArchitecture={allArchitecture} />
-    </div>
+    <Views allArchitecture={allArchitecture} defaultProject={defaultProject} />
   );
 }
