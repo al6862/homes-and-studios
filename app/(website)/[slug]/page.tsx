@@ -38,7 +38,7 @@ export default async function Page({
 
   return (
     <div className="md:px-5 md:flex md:gap-5">
-      {desktopImage.image?.assetPath && (
+      {desktopImage?.image?.assetPath && (
         <Image
           className={`md:w-[78%] object-cover${mobileImage?.image?.assetPath && " max-md:hidden"}`}
           src={desktopImage.image?.assetPath}

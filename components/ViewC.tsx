@@ -90,9 +90,11 @@ export default function ViewC({
       })}
 
       <div className="sticky bottom-0 h-0">
-        <p className="body absolute inset-x-0 bottom-5 mx-auto px-5 text-center md:w-[48%] md:px-0">
-          {captions[captionIndex]}
-        </p>
+        <div className="absolute inset-x-0 bottom-0 bg-background px-5 py-3">
+          <p className="body mx-auto text-center md:w-[48%]">
+            {captions[captionIndex]}
+          </p>
+        </div>
       </div>
     </div>
   );

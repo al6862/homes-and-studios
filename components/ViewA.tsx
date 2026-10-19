@@ -8,75 +8,132 @@ import { AnimatePresence, motion } from "motion/react";
 import { PortableTextBlock } from "next-sanity";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useView } from "./view-context";
 import { CustomPortableText } from "./CustomPortableText";
+import { isMobile, useOpenInViewC } from "./useOpenInViewC";
+
+type Architecture = AllArchitectureQueryResult[number];
+
+// "Nyack, New York, USA" -> "USA"
+const getCountry = (location: string) =>
+  location.split(",").pop()?.trim() ?? "";
 
 export default function ViewA({
   allArchitecture,
+  groupBy = "title",
+  pathPrefix = "",
 }: {
   allArchitecture: AllArchitectureQueryResult;
+  groupBy?: "title" | "location";
+  pathPrefix?: string;
 }) {
   const { activeProject, setActiveProject } = useView();
   const activeSlug = activeProject?.slug;
-
   const pathname = usePathname();
-  const setNewData = async (slug: string) => {
-    const archData = await client.fetch(architectureQuery, { slug });
-    setActiveProject(archData);
-    window.history.pushState({}, "", `/${archData?.slug}`);
-  };
+  const collapsible = groupBy === "location";
 
-  const handleClick = async (
-    event: React.MouseEvent<HTMLParagraphElement, MouseEvent>,
-  ) => {
-    if (
-      event.currentTarget.dataset.slug &&
-      event.currentTarget.dataset.slug != activeSlug
-    ) {
-      setNewData(event.currentTarget.dataset.slug);
+  const getGroup = (architecture: Architecture) =>
+    groupBy === "location"
+      ? getCountry(architecture.location)
+      : (architecture.title?.[0] ?? "");
+
+  const sorted =
+    groupBy === "location"
+      ? [...allArchitecture].sort(
+          (a, b) =>
+            getCountry(a.location).localeCompare(getCountry(b.location)) ||
+            (a.title ?? "").localeCompare(b.title ?? ""),
+        )
+      : allArchitecture;
+
+  const groups: { name: string; projects: Architecture[] }[] = [];
+  for (const architecture of sorted) {
+    const name = getGroup(architecture);
+    const last = groups[groups.length - 1];
+    if (last?.name === name) last.projects.push(architecture);
+    else groups.push({ name, projects: [architecture] });
+  }
+
+  const [openGroups, setOpenGroups] = useState<string[]>(
+    groups[0] ? [groups[0].name] : [],
+  );
+
+  const toggleGroup = (name: string) =>
+    setOpenGroups((open) =>
+      open.includes(name) ? open.filter((n) => n !== name) : [...open, name],
+    );
+
+  const selectProject = async (slug: string, updateUrl: boolean) => {
+    const archData = await client.fetch(architectureQuery, { slug });
+    if (!archData) return;
+    setActiveProject(archData);
+    if (updateUrl) {
+      window.history.pushState({}, "", `${pathPrefix}/${archData.slug}`);
     }
   };
 
+  const openInViewC = useOpenInViewC();
+
+  const handleClick = (
+    event: React.MouseEvent<HTMLParagraphElement, MouseEvent>,
+  ) => {
+    const slug = event.currentTarget.dataset.slug;
+    if (!slug) return;
+    // On mobile, projects open in View C instead of the detail column.
+    if (isMobile()) {
+      openInViewC(slug);
+      return;
+    }
+    if (slug != activeSlug) selectProject(slug, true);
+  };
+
   useEffect(() => {
-    if (pathname == "/") {
+    const newSlug = pathname.slice(pathPrefix.length).split("/")[1];
+    if (!newSlug) {
       setActiveProject(null);
-    } else {
-      const newSlug = pathname.split("/")[1];
-      if (newSlug && newSlug != activeSlug) {
-        setNewData(newSlug);
-      }
+    } else if (isMobile() && pathPrefix) {
+      // A Location project link opened directly on mobile goes to View C.
+      openInViewC(newSlug, { replace: true });
+    } else if (newSlug != activeSlug) {
+      selectProject(newSlug, false);
     }
   }, [pathname]);
 
   return (
     <div className="px-5 md:grid grid-cols-2 gap-5">
       <div
-        className={`${activeSlug ? `max-md:hidden` : ``} sticky bottom-0 self-start mt-auto max-md:mt-[0.8125rem]`}
+        className={`self-start max-md:mt-[0.8125rem] ${collapsible ? "" : "sticky bottom-0 mt-auto"}`}
       >
-        {allArchitecture.map((architecture, i) => {
-          const { title, slug, location } = architecture;
-          const prevTitle = allArchitecture[i - 1]?.title;
+        {groups.map((group) => {
+          const isOpen = !collapsible || openGroups.includes(group.name);
           return (
-            <div key={i} className="group">
-              {((title && i == 0) ||
-                (title && prevTitle && title[0] != prevTitle[0])) && (
-                <div className="flex max-md:group-first:mt-0 mt-8 md:mt-5 after:content-[''] after:w-full after:border-b-[0.5px] after:border-dashed">
-                  <p className="alphabet-break w-min">({title[0]})</p>
-                </div>
-              )}
-              <div className="flex justify-between mt-4 md:mt-2">
-                {title && (
-                  <p
-                    onClick={handleClick}
-                    data-slug={slug}
-                    className="title cursor-pointer"
-                  >
-                    {title}
-                  </p>
-                )}
-                {location && <p className="location text-gray">{location}</p>}
+            <div key={group.name} className="group">
+              <div
+                onClick={collapsible ? () => toggleGroup(group.name) : undefined}
+                className={`flex max-md:group-first:mt-0 mt-8 md:mt-5 after:content-[''] after:w-full after:border-b-[0.5px] after:border-dashed ${collapsible ? "cursor-pointer" : ""}`}
+              >
+                <p className="alphabet-break whitespace-nowrap">
+                  ({group.name})
+                </p>
               </div>
+              {isOpen &&
+                group.projects.map(({ title, slug, location }) => (
+                  <div key={slug} className="flex justify-between mt-4 md:mt-2">
+                    {title && (
+                      <p
+                        onClick={handleClick}
+                        data-slug={slug}
+                        className="title cursor-pointer"
+                      >
+                        {title}
+                      </p>
+                    )}
+                    {location && (
+                      <p className="location text-gray">{location}</p>
+                    )}
+                  </div>
+                ))}
             </div>
           );
         })}
@@ -85,6 +142,7 @@ export default function ViewA({
         {activeProject && (
           <motion.div
             key={activeProject.slug}
+            className="max-md:hidden"
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >

@@ -6,6 +6,7 @@
 @theme {
   --color-gray: #898989;
   --color-warm-white: #f8f5ea;
+  --color-background: #151515;
 }
 
 @layer base {
