@@ -19,6 +19,11 @@ export const suisse = localFont({
 export const unica = localFont({
   src: [
     {
+      path: "./Unica77LLWeb-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
       path: "./Unica77LLWeb-Medium.woff2",
       weight: "500",
       style: "normal",
