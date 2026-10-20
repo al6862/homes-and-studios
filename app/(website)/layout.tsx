@@ -6,6 +6,7 @@ import { VisualEditing } from "next-sanity";
 import { draftMode } from "next/headers";
 
 import AlertBanner from "./alert-banner";
+import { suisse, unica } from "./fonts/fonts";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -69,7 +70,9 @@ export default async function RootLayout({
   ]);
 
   return (
-    <body className="bg-black text-white ${suisse.variable} ${unica.variable}">
+    <body
+      className={`bg-background text-white ${suisse.variable} ${unica.variable}`}
+    >
       <ViewProvider>
         {header && <Header header={header} />}
         <main>

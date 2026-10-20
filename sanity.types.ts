@@ -115,6 +115,7 @@ export type ImageGroup = {
     _type: "image";
   };
   alt2?: string;
+  caption?: string;
 };
 
 export type CallToAction = {
@@ -472,8 +473,9 @@ export type AllArchitectureQueryResult = Array<{
   } | null;
 }>;
 // Variable: architectureQuery
-// Query: *[_type == 'architecture' && slug.current == $slug][0] {        "slug": slug.current,        visitLink,        author,        location,        address,        descriptionProt,        gallery[] {    caption,    'assetId': asset->_id,    'assetPath': asset->path,    'aspectRatio': asset->metadata.dimensions.aspectRatio,},        descriptionProt2,        section2[] {    ...,    markDefs[]{        ...,        _type == "link" => {    ...,    internalLink->{_type,slug,title}}    },    _type == "imageGroup" => {    ...,    image1 {        'assetId': asset->_id,        'assetPath': asset->path,        'aspectRatio': asset->metadata.dimensions.aspectRatio,    },    image2 {        'assetId': asset->_id,        'assetPath': asset->path,        'aspectRatio': asset->metadata.dimensions.aspectRatio,    }},    _type == "imageObject" => {    ...,    image {        'assetId': asset->_id,        'assetPath': asset->path,        'aspectRatio': asset->metadata.dimensions.aspectRatio,    }}},        imageCourtesy,        footerButton,        metaTitle,        metaDesc,    }
+// Query: *[_type == 'architecture' && slug.current == $slug][0] {        title,        "slug": slug.current,        visitLink,        author,        location,        address,        descriptionProt,        gallery[] {    caption,    'assetId': asset->_id,    'assetPath': asset->path,    'aspectRatio': asset->metadata.dimensions.aspectRatio,},        descriptionProt2,        section2[] {    ...,    markDefs[]{        ...,        _type == "link" => {    ...,    internalLink->{_type,slug,title}}    },    _type == "imageGroup" => {    ...,    image1 {        'assetId': asset->_id,        'assetPath': asset->path,        'aspectRatio': asset->metadata.dimensions.aspectRatio,    },    image2 {        'assetId': asset->_id,        'assetPath': asset->path,        'aspectRatio': asset->metadata.dimensions.aspectRatio,    }},    _type == "imageObject" => {    ...,    image {        'assetId': asset->_id,        'assetPath': asset->path,        'aspectRatio': asset->metadata.dimensions.aspectRatio,    }}},        imageCourtesy,        footerButton,        metaTitle,        metaDesc,    }
 export type ArchitectureQueryResult = {
+  title: string | null;
   slug: string;
   visitLink: string | null;
   author: string;
@@ -536,6 +538,7 @@ export type ArchitectureQueryResult = {
       aspectRatio: number | null;
     } | null;
     alt2?: string;
+    caption?: string;
     markDefs: null;
   } | {
     _key: string;
@@ -628,7 +631,7 @@ declare module "@sanity/client" {
     "\n    *[_type == 'header'][0] {\n        navList[] {\n    ...,\n    internalLink->{_type,slug,title}\n},\n    }\n": HeaderQueryResult;
     "\n    *[_type == 'footer'][0] {\n        navList[] {\n    ...,\n    internalLink->{_type,slug,title}\n},\n    }\n": FooterQueryResult;
     "\n    *[_type == 'architecture'] | order(title asc) {\n        title,\n        \"slug\": slug.current,\n        location,\n        \"coverImage\": gallery[0] {\n    caption,\n    'assetId': asset->_id,\n    'assetPath': asset->path,\n    'aspectRatio': asset->metadata.dimensions.aspectRatio,\n},\n    }\n": AllArchitectureQueryResult;
-    "\n    *[_type == 'architecture' && slug.current == $slug][0] {\n        \"slug\": slug.current,\n        visitLink,\n        author,\n        location,\n        address,\n        descriptionProt,\n        gallery[] {\n    caption,\n    'assetId': asset->_id,\n    'assetPath': asset->path,\n    'aspectRatio': asset->metadata.dimensions.aspectRatio,\n},\n        descriptionProt2,\n        section2[] {\n    ...,\n    markDefs[]{\n        ...,\n        _type == \"link\" => {\n    ...,\n    internalLink->{_type,slug,title}\n}\n    },\n    _type == \"imageGroup\" => {\n    ...,\n    image1 {\n        'assetId': asset->_id,\n        'assetPath': asset->path,\n        'aspectRatio': asset->metadata.dimensions.aspectRatio,\n    },\n    image2 {\n        'assetId': asset->_id,\n        'assetPath': asset->path,\n        'aspectRatio': asset->metadata.dimensions.aspectRatio,\n    }\n},\n    _type == \"imageObject\" => {\n    ...,\n    image {\n        'assetId': asset->_id,\n        'assetPath': asset->path,\n        'aspectRatio': asset->metadata.dimensions.aspectRatio,\n    }\n}\n},\n        imageCourtesy,\n        footerButton,\n        metaTitle,\n        metaDesc,\n    }\n": ArchitectureQueryResult;
+    "\n    *[_type == 'architecture' && slug.current == $slug][0] {\n        title,\n        \"slug\": slug.current,\n        visitLink,\n        author,\n        location,\n        address,\n        descriptionProt,\n        gallery[] {\n    caption,\n    'assetId': asset->_id,\n    'assetPath': asset->path,\n    'aspectRatio': asset->metadata.dimensions.aspectRatio,\n},\n        descriptionProt2,\n        section2[] {\n    ...,\n    markDefs[]{\n        ...,\n        _type == \"link\" => {\n    ...,\n    internalLink->{_type,slug,title}\n}\n    },\n    _type == \"imageGroup\" => {\n    ...,\n    image1 {\n        'assetId': asset->_id,\n        'assetPath': asset->path,\n        'aspectRatio': asset->metadata.dimensions.aspectRatio,\n    },\n    image2 {\n        'assetId': asset->_id,\n        'assetPath': asset->path,\n        'aspectRatio': asset->metadata.dimensions.aspectRatio,\n    }\n},\n    _type == \"imageObject\" => {\n    ...,\n    image {\n        'assetId': asset->_id,\n        'assetPath': asset->path,\n        'aspectRatio': asset->metadata.dimensions.aspectRatio,\n    }\n}\n},\n        imageCourtesy,\n        footerButton,\n        metaTitle,\n        metaDesc,\n    }\n": ArchitectureQueryResult;
     "\n    *[_type == 'page' && slug.current == $slug][0] {\n        \"slug\": slug.current,\n        desktopImage {\n    ...,\n    image {\n        'assetId': asset->_id,\n        'assetPath': asset->path,\n        'aspectRatio': asset->metadata.dimensions.aspectRatio,\n    }\n},\n        mobileImage {\n    ...,\n    image {\n        'assetId': asset->_id,\n        'assetPath': asset->path,\n        'aspectRatio': asset->metadata.dimensions.aspectRatio,\n    }\n},\n        content[] {\n    ...,\n    markDefs[]{\n        ...,\n        _type == \"link\" => {\n    ...,\n    internalLink->{_type,slug,title}\n}\n    },\n    _type == \"imageGroup\" => {\n    ...,\n    image1 {\n        'assetId': asset->_id,\n        'assetPath': asset->path,\n        'aspectRatio': asset->metadata.dimensions.aspectRatio,\n    },\n    image2 {\n        'assetId': asset->_id,\n        'assetPath': asset->path,\n        'aspectRatio': asset->metadata.dimensions.aspectRatio,\n    }\n},\n    _type == \"imageObject\" => {\n    ...,\n    image {\n        'assetId': asset->_id,\n        'assetPath': asset->path,\n        'aspectRatio': asset->metadata.dimensions.aspectRatio,\n    }\n}\n},\n    }\n": PageQueryResult;
   }
 }

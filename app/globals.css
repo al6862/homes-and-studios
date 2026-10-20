@@ -5,6 +5,8 @@
 
 @theme {
   --color-gray: #898989;
+  --color-warm-white: #f8f5ea;
+  --color-background: #151515;
 }
 
 @layer base {
@@ -84,7 +86,6 @@ button {
 
 .body {
   font-weight: 400;
-  font-style: Regular;
   font-size: 12px;
   line-height: 100%;
   letter-spacing: 0.01em;
