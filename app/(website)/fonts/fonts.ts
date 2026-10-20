@@ -1,6 +1,6 @@
 import localFont from "next/font/local"
 
-export const suisse - localFont({
+export const suisse = localFont({
     src: [
         {
             path: "./fonts/SuisseIntl-Thin.woff2",
