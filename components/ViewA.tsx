@@ -125,6 +125,9 @@ export default function ViewA({
                         onClick={handleClick}
                         data-slug={slug}
                         className="title cursor-pointer"
+                        style={{
+                          fontWeight: slug === activeSlug ? 500 : undefined,
+                        }}
                       >
                         {title}
                       </p>
